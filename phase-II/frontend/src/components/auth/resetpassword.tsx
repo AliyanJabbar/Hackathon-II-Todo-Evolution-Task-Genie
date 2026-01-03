@@ -130,7 +130,7 @@ export function ResetPasswordCard() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-slate-950 text-slate-50">
+    <div className="min-h-screen flex flex-col lg:flex-row mt-10 bg-slate-950 text-slate-50">
       {/* Left Side - Branding (Matches ForgotPassword) */}
       <div className="hidden lg:flex lg:w-1/2 bg-slate-900 flex-col justify-between p-12 fixed left-0 top-0 h-screen overflow-hidden z-10">
         <div className="flex flex-col items-center justify-center flex-1">
