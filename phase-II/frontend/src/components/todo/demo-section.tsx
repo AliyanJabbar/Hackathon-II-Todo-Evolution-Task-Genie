@@ -1,6 +1,6 @@
 "use client";
 
-import React, {
+import {
   Dispatch,
   SetStateAction,
   useState,
@@ -12,6 +12,7 @@ import { Plus, Trash2, Flame, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import TodoAPI, { Todo } from "@/services/api";
 import { useSession } from "next-auth/react";
+import BoardSkeleton from "./board-skeleton";
 
 // --- Types ---
 type ColumnType = "backlog" | "todo" | "doing" | "done";
@@ -135,25 +136,10 @@ const Board = () => {
     } catch (error) { console.error(error); }
   };
 
-  if (status === "loading" || loading) return <div>Loading...</div>;
+  if (status === "loading" || loading) return <BoardSkeleton />;
   return (
     <div className="w-full py-4">
-      <div className="
-        w-full
-        // Layouts
-        flex flex-col gap-6           // Mobile
-        md:grid md:grid-cols-2        // Tablet
-        xl:flex xl:flex-row           // Desktop
-        xl:items-start                // Align columns to top
-        min-h-[300px]
-
-        // Scroll Logic
-        xl:overflow-x-auto
-        [scrollbar-width:none]
-        [-ms-overflow-style:none]
-        [&::-webkit-scrollbar]:hidden
-      ">
-
+<div className="w-full flex flex-col gap-6 md:grid md:grid-cols-2 xl:flex xl:flex-row xl:items-start min-h-75 xl:overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         <Column
           title="Backlog"
           column="backlog"

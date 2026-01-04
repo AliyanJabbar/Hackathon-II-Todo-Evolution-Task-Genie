@@ -6,11 +6,11 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-[100dvh] items-center justify-center pt-20 overflow-hidden">
+    <section className="relative flex min-h-dvh items-center justify-center pt-20 overflow-hidden">
       {/* Background Ambience */}
       <div className="pointer-events-none absolute inset-0 flex justify-center">
-        <div className="h-[500px] w-[500px] rounded-full bg-violet-600/20 blur-[130px] mix-blend-screen" />
-        <div className="absolute right-0 top-0 h-[400px] w-[400px] rounded-full bg-blue-600/10 blur-[100px]" />
+        <div className="h-125 w-125 rounded-full bg-violet-600/20 blur-[130px] mix-blend-screen" />
+        <div className="absolute right-0 top-0 h-100 w-100 rounded-full bg-blue-600/10 blur-[100px]" />
       </div>
 
       <div className="container relative z-10 px-4 text-center">
@@ -31,7 +31,7 @@ export default function Hero() {
           className="mx-auto max-w-4xl text-5xl font-bold tracking-tight text-white sm:text-7xl"
         >
           Organize chaos. <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-fuchsia-400">
             Achieve clarity.
           </span>
         </motion.h1>

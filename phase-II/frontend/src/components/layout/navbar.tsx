@@ -28,7 +28,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Demo", href: "/todo" },
-    { name: "Features", href: "#features" },
+    { name: "Features", href: "/#features" },
     { name: "Pricing", href: "#" },
   ];
 
@@ -52,7 +52,7 @@ export default function Navbar() {
               height={100}
               className="flex h-8 w-auto md:h-10 transition-transform group-hover:scale-105"
             />
-            <span className="text-lg tracking-tight bg-gradient-to-r from-white to-violet-400 bg-clip-text text-transparent">
+            <span className="text-lg tracking-tight bg-linear-to-r from-white to-violet-400 bg-clip-text text-transparent">
               TaskGenie
             </span>
           </Link>

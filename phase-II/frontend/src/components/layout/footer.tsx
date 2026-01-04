@@ -22,7 +22,7 @@ export default function Footer() {
               height={100}
               className="flex h-8 w-auto md:h-10 transition-transform group-hover:scale-105"
             />
-            <span className="text-lg tracking-tight bg-gradient-to-r from-white to-violet-400 bg-clip-text text-transparent">
+            <span className="text-lg tracking-tight bg-linear-to-r from-white to-violet-400 bg-clip-text text-transparent">
               TaskGenie
             </span>
           </Link>
@@ -36,7 +36,7 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <h4 className="text-sm font-semibold text-slate-100">Product</h4>
             <nav className="flex flex-col gap-2">
-              <Link href="#features" className="text-sm text-slate-400 transition-colors hover:text-indigo-400">
+              <Link href="/#features" className="text-sm text-slate-400 transition-colors hover:text-indigo-400">
                 Features
               </Link>
               <Link href="#demo" className="text-sm text-slate-400 transition-colors hover:text-indigo-400">

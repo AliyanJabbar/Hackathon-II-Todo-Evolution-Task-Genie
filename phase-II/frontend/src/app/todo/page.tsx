@@ -1,6 +1,6 @@
 "use client";
 
-import DemoSection from "@/components/home/demo-section";
+import DemoSection from "@/components/todo/demo-section";
 
 export default function TodoPage() {
   return (
