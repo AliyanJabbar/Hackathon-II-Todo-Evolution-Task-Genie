@@ -440,22 +440,33 @@ const AddCard = ({ column, setCards, onCreateTodo }: { column: ColumnType; setCa
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      handleSubmit(e as any);
+    }
+  };
+
   return (
     <>
       {adding ? (
         <form onSubmit={handleSubmit}>
           <textarea
             onChange={(e) => setText(e.target.value)}
+            onKeyDown={handleKeyDown}
             autoFocus
             placeholder="Add task..."
             className="w-full rounded-lg border border-indigo-500/30 bg-indigo-500/10 p-3 text-sm text-slate-50 placeholder-indigo-300/50 focus:outline-0 focus:ring-1 focus:ring-indigo-500"
           />
-          <div className="mt-1.5 flex items-center justify-end gap-1.5">
-            <button onClick={() => setAdding(false)} className="px-3 py-1.5 text-xs text-slate-400 hover:text-slate-50">Cancel</button>
-            <button type="submit" className="flex items-center gap-1.5 rounded bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-500">
-              <span>Add</span>
-              <Plus size={14} />
-            </button>
+          <div className="mt-1 flex items-center justify-between">
+            <span className="text-xs text-slate-400">Ctrl+Enter (submit)</span>
+            <div className="flex items-center gap-1.5">
+              <button onClick={() => setAdding(false)} className="px-3 py-1.5 text-xs text-slate-400 hover:text-slate-50">Cancel</button>
+              <button type="submit" className="flex items-center gap-1.5 rounded bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-500">
+                <span>Add</span>
+                <Plus size={14} />
+              </button>
+            </div>
           </div>
         </form>
       ) : (

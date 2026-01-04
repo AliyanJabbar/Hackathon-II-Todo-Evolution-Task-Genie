@@ -1,19 +1,29 @@
 import Hero from "@/components/home/hero";
 import FeatureGrid from "@/components/home/feature-grid";
 import CtaBanner from "@/components/home/cta-banner";
+import ProductMockup from "@/components/home/product-mockup";
+import StatSection from "@/components/home/stat-section";
+import Testimonials from "@/components/home/testimonials";
+import Pricing from "@/components/home/pricing";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-16 pb-10">
-      {/* 1. Hero: Catch the judge's attention immediately */}
+    <div className="flex flex-col gap-8 pb-10">
       <Hero />
 
-      {/* 2. Features: Explain the 'How' and 'Why' */}
-      <FeatureGrid />
+      <ProductMockup />
 
-      {/* 4. Final Call to Action */}
+      <StatSection />
+
+      <div className="pt-10">
+        <FeatureGrid />
+      </div>
+
+      <Testimonials />
+
+      <Pricing/>
+
       <CtaBanner />
-      
     </div>
   );
 }
