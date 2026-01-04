@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/providers/smooth-scroll";
 import AuthProvider from "@/components/providers/session-provider";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
+import { Toaster } from "sonner";
 
 export default function ClientLayout({
   children,
@@ -26,6 +27,7 @@ export default function ClientLayout({
           {children}
         </main>
         {!AuthRoutes.includes(pathname) && <Footer />}
+        <Toaster />
       </SmoothScroll>
     </AuthProvider>
   );
