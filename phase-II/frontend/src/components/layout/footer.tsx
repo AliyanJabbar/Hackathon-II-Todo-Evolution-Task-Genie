@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Github, Twitter, Linkedin, CheckSquare, Heart } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -9,12 +10,22 @@ export default function Footer() {
           
           {/* Column 1: Brand & Mission */}
           <div className="flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-2 font-bold text-white">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 shadow-lg shadow-indigo-500/20">
-                <CheckSquare size={18} className="text-white" />
-              </div>
-              <span className="text-lg tracking-tight">TaskGenie</span>
-            </Link>
+            {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-2 font-bold text-white group"
+          >
+            <Image
+              src="/logo.png"
+              alt="taskgenie"
+              width={180}
+              height={100}
+              className="flex h-8 w-auto md:h-10 transition-transform group-hover:scale-105"
+            />
+            <span className="text-lg tracking-tight bg-gradient-to-r from-white to-violet-400 bg-clip-text text-transparent">
+              TaskGenie
+            </span>
+          </Link>
             <p className="text-sm leading-relaxed text-slate-400">
               The AI-powered task manager designed for high-performance individuals. 
               Organize your life, one pixel at a time.
