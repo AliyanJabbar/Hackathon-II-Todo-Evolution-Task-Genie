@@ -10,6 +10,7 @@ import {
 } from "react";
 import { Plus, Trash2, Flame, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import TodoAPI, { Todo } from "@/services/api";
 import { useSession } from "next-auth/react";
 import BoardSkeleton from "./board-skeleton";
@@ -104,36 +105,73 @@ const Board = () => {
 
   const handleCreateTodo = async (title: string, column: ColumnType) => {
     if (!token) return;
+
+    // Generate temporary ID for optimistic update
+    const tempId = `temp-${Date.now()}-${Math.random()}`;
+    const optimisticCard = { id: tempId, title, column };
+
+    // Optimistically add to UI immediately
+    setCards(prev => [...prev, optimisticCard]);
+
     try {
       const newTodo = await TodoAPI.createTodo({ title, category: column }, token);
-      const newCard = { id: newTodo.id.toString(), title: newTodo.title, column: newTodo.category };
-      setCards(prev => [...prev, newCard]);
-    } catch (error) { console.error(error); }
+      // Replace temporary card with real data
+      setCards(prev => prev.map(card =>
+        card.id === tempId
+          ? { id: newTodo.id.toString(), title: newTodo.title, column: newTodo.category }
+          : card
+      ));
+    } catch (error) {
+      console.error(error);
+      // Rollback: remove the optimistic card on failure
+      setCards(prev => prev.filter(card => card.id !== tempId));
+    }
   };
 
   const handleUpdateTodo = async (id: string, newColumn: ColumnType) => {
     if (!token) return;
+
+    const currentCard = cards.find(card => card.id === id);
+    if (!currentCard) return;
+
+    // Store original state for rollback
+    const originalColumn = currentCard.column;
+
+    // Optimistically update UI immediately
+    setCards(prev => prev.map(card => card.id === id ? { ...card, column: newColumn } : card));
+
     try {
       const todoId = parseInt(id);
-      const currentCard = cards.find(card => card.id === id);
-      if (!currentCard) return;
-
       await TodoAPI.updateTodo(todoId, {
         id: todoId,
         title: currentCard.title,
         category: newColumn
       }, token);
-
-      setCards(prev => prev.map(card => card.id === id ? { ...card, column: newColumn } : card));
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      console.error(error);
+      // Rollback: revert to original column on failure
+      setCards(prev => prev.map(card => card.id === id ? { ...card, column: originalColumn } : card));
+    }
   };
 
   const handleDeleteTodo = async (id: string) => {
     if (!token) return;
+
+    // Store the card for potential rollback
+    const cardToDelete = cards.find(card => card.id === id);
+    if (!cardToDelete) return;
+
+    // Optimistically remove from UI immediately
+    setCards(prev => prev.filter(card => card.id !== id));
+
     try {
       await TodoAPI.deleteTodo(parseInt(id), token);
-      setCards(prev => prev.filter(card => card.id !== id));
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      console.error(error);
+      // Rollback: add the card back on failure
+      setCards(prev => [...prev, cardToDelete]);
+      toast.error("Failed to delete todo. Please try again.");
+    }
   };
 
   if (status === "loading" || loading) return <BoardSkeleton />;
@@ -299,7 +337,7 @@ const Column = ({ title, headingColor, cards, column, setCards, onUpdateTodo, on
           <Card key={c.id} {...c} handleDragStart={handleDragStart} onDeleteTodo={onDeleteTodo} />
         ))}
         <DropIndicator beforeId={null} column={column} />
-        <AddCard column={column} setCards={setCards} onCreateTodo={onCreateTodo} />
+        <AddCard key={column} column={column} setCards={setCards} onCreateTodo={onCreateTodo} />
       </div>
     </div>
   );
@@ -381,20 +419,31 @@ const BurnBarrel = ({ setCards, onDeleteTodo, mobile = false }: { setCards: Disp
 const AddCard = ({ column, setCards, onCreateTodo }: { column: ColumnType; setCards: Dispatch<SetStateAction<CardType[]>>; onCreateTodo: (title: string, column: ColumnType) => void }) => {
   const [text, setText] = useState("");
   const [adding, setAdding] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!text.trim().length) return;
 
-    // Create todo via API
-    await onCreateTodo(text.trim(), column);
-    setAdding(false);
+    const taskText = text.trim();
+    setText("");
+    setAdding(false); // Close form immediately
+
+    try {
+      // Create todo via API
+      await onCreateTodo(taskText, column);
+    } catch (error) {
+      console.error(error);
+      // Re-open form on error so user can try again
+      setAdding(true);
+      setText(taskText);
+    }
   };
 
   return (
     <>
       {adding ? (
-        <motion.form layout onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <textarea
             onChange={(e) => setText(e.target.value)}
             autoFocus
@@ -408,12 +457,12 @@ const AddCard = ({ column, setCards, onCreateTodo }: { column: ColumnType; setCa
               <Plus size={14} />
             </button>
           </div>
-        </motion.form>
+        </form>
       ) : (
-        <motion.button layout onClick={() => setAdding(true)} className="flex w-full items-center gap-1.5 px-3 py-1.5 text-xs text-slate-500 hover:text-slate-300">
+        <button onClick={() => setAdding(true)} className="flex w-full items-center gap-1.5 px-3 py-1.5 text-xs text-slate-500 hover:text-slate-300">
           <span>Add card</span>
           <Plus size={14} />
-        </motion.button>
+        </button>
       )}
     </>
   );
