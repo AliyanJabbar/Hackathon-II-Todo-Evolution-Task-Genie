@@ -11,6 +11,7 @@ import React, {
 import { Plus, Trash2, Flame, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import TodoAPI, { Todo } from "@/services/api";
+import { useSession } from "next-auth/react";
 
 // --- Types ---
 type ColumnType = "backlog" | "todo" | "doing" | "done";
@@ -71,50 +72,48 @@ export default function DemoSection() {
 }
 
 const Board = () => {
+  const { data: session, status } = useSession();
+  const token = (session as any)?.accessToken; // Access our custom token
   const [cards, setCards] = useState<CardType[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTodos = async () => {
+      if (status !== "authenticated" || !token) {
+        setLoading(false);
+        return;
+      }
       try {
-        const todos = await TodoAPI.getTodos();
-        // Convert backend todos to frontend card format
+        const todos = await TodoAPI.getTodos(token);
         const cardData = todos.map(todo => ({
           id: todo.id.toString(),
           title: todo.title,
-          column: todo.category
+          column: todo.category as ColumnType
         }));
         setCards(cardData);
       } catch (error) {
         console.error("Failed to fetch todos:", error);
-        // Set default cards if API fails
-        setCards(DEFAULT_CARDS);
       } finally {
         setLoading(false);
       }
     };
 
     fetchTodos();
-  }, []);
+  }, [status, token]);
 
   const handleCreateTodo = async (title: string, column: ColumnType) => {
+    if (!token) return;
     try {
-      const newTodo = await TodoAPI.createTodo({ title, category: column });
-      const newCard = {
-        id: newTodo.id.toString(),
-        title: newTodo.title,
-        column: newTodo.category
-      };
+      const newTodo = await TodoAPI.createTodo({ title, category: column }, token);
+      const newCard = { id: newTodo.id.toString(), title: newTodo.title, column: newTodo.category };
       setCards(prev => [...prev, newCard]);
-    } catch (error) {
-      console.error("Failed to create todo:", error);
-    }
+    } catch (error) { console.error(error); }
   };
 
   const handleUpdateTodo = async (id: string, newColumn: ColumnType) => {
+    if (!token) return;
     try {
       const todoId = parseInt(id);
-      // Find the current todo to get its title
       const currentCard = cards.find(card => card.id === id);
       if (!currentCard) return;
 
@@ -122,36 +121,21 @@ const Board = () => {
         id: todoId,
         title: currentCard.title,
         category: newColumn
-      });
+      }, token);
 
-      setCards(prev =>
-        prev.map(card =>
-          card.id === id ? { ...card, column: newColumn } : card
-        )
-      );
-    } catch (error) {
-      console.error("Failed to update todo:", error);
-    }
+      setCards(prev => prev.map(card => card.id === id ? { ...card, column: newColumn } : card));
+    } catch (error) { console.error(error); }
   };
 
   const handleDeleteTodo = async (id: string) => {
+    if (!token) return;
     try {
-      const todoId = parseInt(id);
-      await TodoAPI.deleteTodo(todoId);
+      await TodoAPI.deleteTodo(parseInt(id), token);
       setCards(prev => prev.filter(card => card.id !== id));
-    } catch (error) {
-      console.error("Failed to delete todo:", error);
-    }
+    } catch (error) { console.error(error); }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="text-slate-400">Loading tasks...</div>
-      </div>
-    );
-  }
-
+  if (status === "loading" || loading) return <div>Loading...</div>;
   return (
     <div className="w-full py-4">
       <div className="

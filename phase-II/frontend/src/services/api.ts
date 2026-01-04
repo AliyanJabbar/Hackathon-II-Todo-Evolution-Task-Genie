@@ -1,99 +1,59 @@
-// frontend/src/services/api.ts
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000';
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
 
-interface Todo {
+export interface Todo {
   id: number;
   title: string;
-  category: 'backlog' | 'todo' | 'doing' | 'done';
-}
-
-interface TodoCreate {
-  title: string;
-  category: 'backlog' | 'todo' | 'doing' | 'done';
+  category: "backlog" | "todo" | "doing" | "done";
 }
 
 class TodoAPI {
-  // Get all todos
-  static async getTodos(): Promise<Todo[]> {
-    try {
-      const response = await fetch(`${BACKEND_URL}/todos`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching todos:', error);
-      throw error;
-    }
+  static getHeaders(token: string) {
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
   }
 
-  // Create a new todo
-  static async createTodo(todo: TodoCreate): Promise<Todo> {
-    try {
-      const response = await fetch(`${BACKEND_URL}/todos`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(todo),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error creating todo:', error);
-      throw error;
-    }
+  static async getTodos(token: string): Promise<Todo[]> {
+    const response = await fetch(`${BACKEND_URL}/todos`, {
+      headers: this.getHeaders(token),
+    });
+    if (!response.ok) throw new Error(`Status: ${response.status}`);
+    return await response.json();
   }
 
-  // Update a todo
-  static async updateTodo(id: number, todo: Todo): Promise<Todo> {
-    try {
-      const response = await fetch(`${BACKEND_URL}/todos/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(todo),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error updating todo:', error);
-      throw error;
-    }
+  static async createTodo(
+    todo: { title: string; category: string },
+    token: string
+  ): Promise<Todo> {
+    const response = await fetch(`${BACKEND_URL}/todos`, {
+      method: "POST",
+      headers: this.getHeaders(token),
+      body: JSON.stringify(todo),
+    });
+    return await response.json();
   }
 
-  // Delete a todo
-  static async deleteTodo(id: number): Promise<{ message: string } | { error: string }> {
-    try {
-      const response = await fetch(`${BACKEND_URL}/todos/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error deleting todo:', error);
-      throw error;
-    }
+  static async updateTodo(
+    id: number,
+    todo: Todo,
+    token: string
+  ): Promise<Todo> {
+    const response = await fetch(`${BACKEND_URL}/todos/${id}`, {
+      method: "PUT",
+      headers: this.getHeaders(token),
+      body: JSON.stringify(todo),
+    });
+    return await response.json();
   }
 
-  // Check if backend is running
-  static async checkBackend(): Promise<boolean> {
-    try {
-      const response = await fetch(`${BACKEND_URL}/`);
-      return response.ok;
-    } catch (error) {
-      console.error('Error checking backend:', error);
-      return false;
-    }
+  static async deleteTodo(id: number, token: string): Promise<any> {
+    const response = await fetch(`${BACKEND_URL}/todos/${id}`, {
+      method: "DELETE",
+      headers: this.getHeaders(token),
+    });
+    return await response.json();
   }
 }
 
 export default TodoAPI;
-export type { Todo, TodoCreate };
