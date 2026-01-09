@@ -359,7 +359,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "fastapi", extras = ["standar", "standard"], specifier = ">=0.124.4" },
+    { name = "fastapi", extras = ["standard"], specifier = ">=0.124.4" },
     { name = "psycopg2", specifier = ">=2.9.11" },
     { name = "pydantic", specifier = ">=2.12.5" },
     { name = "python-dotenv", specifier = ">=1.0.0" },
