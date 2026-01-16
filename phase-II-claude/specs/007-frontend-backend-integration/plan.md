@@ -9,7 +9,7 @@
 
 ## Objective
 
-Establish a reliable and scalable integration between the Next.js frontend and FastAPI backend using an environment-based configuration (`BACKEND_URL`) and clearly defined API communication patterns.
+Establish a reliable and scalable integration between the Next.js frontend and FastAPI backend using an environment-based configuration (`NEXT_PUBLIC_BACKEND_URL`) and clearly defined API communication patterns.
 
 ---
 
@@ -47,7 +47,7 @@ Establish a reliable and scalable integration between the Next.js frontend and F
 ## Technical Approach
 
 ### Frontend (Next.js)
-- Use `process.env.NEXT_PUBLIC_BACKEND_URL`
+- Use `process.env.NEXT_PUBLIC_NEXT_PUBLIC_BACKEND_URL`
 - Centralize API calls in a dedicated module (e.g. `services/todoApi.ts`)
 - Ensure JSON serialization/deserialization
 - Handle loading, success, and error states
@@ -62,7 +62,7 @@ Establish a reliable and scalable integration between the Next.js frontend and F
 
 | Risk | Mitigation |
 |----|----|
-| Misconfigured BACKEND_URL | Add validation & fallback error messaging |
+| Misconfigured NEXT_PUBLIC_BACKEND_URL | Add validation & fallback error messaging |
 | Backend downtime | Graceful UI error handling |
 | API changes | Keep documentation synced via context7 MCP |
 | Slow responses | Timeout handling & loading indicators |

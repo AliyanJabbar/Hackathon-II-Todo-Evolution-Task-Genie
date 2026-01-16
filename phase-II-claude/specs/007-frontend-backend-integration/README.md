@@ -6,7 +6,7 @@ This feature connects the Next.js frontend with the FastAPI backend to enable se
 
 1. The backend URL is configured in `frontend/.env.local`:
    ```
-   BACKEND_URL=http://localhost:8000
+   NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
    ```
 
 2. The frontend uses the API service at `frontend/src/services/api.ts` to make calls to the backend endpoints:

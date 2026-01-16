@@ -9,7 +9,7 @@
 ## Phase 1: Environment Setup
 
 - [X] Create `.env.local` file in frontend root
-- [X] Add `NEXT_PUBLIC_BACKEND_URL=<backend_url>`
+- [X] Add `NEXT_PUBLIC_NEXT_PUBLIC_BACKEND_URL=<NEXT_PUBLIC_BACKEND_URL>`
 - [X] Verify environment variable access in Next.js
 - [X] Document environment setup steps
 
@@ -18,7 +18,7 @@
 ## Phase 2: API Service Layer
 
 - [X] Create a centralized API utility file
-- [X] Implement base fetch wrapper using BACKEND_URL
+- [X] Implement base fetch wrapper using NEXT_PUBLIC_BACKEND_URL
 - [X] Handle JSON headers and parsing
 - [X] Add basic error handling (network + non-200 responses)
 
@@ -66,7 +66,7 @@
 ## Phase 7: Testing & Validation
 
 - [X] Test CRUD operations manually
-- [X] Validate BACKEND_URL switching
+- [X] Validate NEXT_PUBLIC_BACKEND_URL switching
 - [X] Test failure scenarios (backend down / wrong URL)
 - [X] Confirm UI feedback accuracy
 

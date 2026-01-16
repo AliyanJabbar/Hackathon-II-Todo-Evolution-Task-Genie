@@ -8,7 +8,7 @@ model: "claude-sonnet-4-5-20250929"
 feature: "007-frontend-backend-integration"
 branch: "001-frontend-backend-integration"
 user: "Aliyan Jabbar"
-command: "/sp.specify connect the frontend (Next.js) and backend (Fastapi) use the context7 mcp to get their updated documentation. For this you have to setup the BACKEND_URL in .env.local of frontend folder in phase-II, then use that BACKEND_URL to make api calls. The details of APIs are in the backend folder of phase-II in file of main.py."
+command: "/sp.specify connect the frontend (Next.js) and backend (Fastapi) use the context7 mcp to get their updated documentation. For this you have to setup the NEXT_PUBLIC_BACKEND_URL in .env.local of frontend folder in phase-II, then use that NEXT_PUBLIC_BACKEND_URL to make api calls. The details of APIs are in the backend folder of phase-II in file of main.py."
 labels: ["integration", "api", "frontend", "backend", "nextjs", "fastapi"]
 links:
   spec: "specs/007-frontend-backend-integration/spec.md"
@@ -30,13 +30,13 @@ evaluation: "The implementation successfully connects the frontend and backend, 
 # Connect frontend Next.js and backend FastAPI with API integration
 
 ## User Input
-connect the frontend (Next.js) and backend (Fastapi) use the context7 mcp to get their updated documentation. For this you have to setup the BACKEND_URL in .env.local of frontend folder in phase-II, then use that BACKEND_URL to make api calls. The details of APIs are in the backend folder of phase-II in file of main.py.
+connect the frontend (Next.js) and backend (Fastapi) use the context7 mcp to get their updated documentation. For this you have to setup the NEXT_PUBLIC_BACKEND_URL in .env.local of frontend folder in phase-II, then use that NEXT_PUBLIC_BACKEND_URL to make api calls. The details of APIs are in the backend folder of phase-II in file of main.py.
 
 ## Response Summary
 Successfully implemented the integration between the Next.js frontend and FastAPI backend by:
 
 1. Created a comprehensive specification for the frontend-backend integration
-2. Set up the BACKEND_URL in frontend/.env.local
+2. Set up the NEXT_PUBLIC_BACKEND_URL in frontend/.env.local
 3. Created an API service (frontend/src/services/api.ts) to handle all API calls to the backend
 4. Updated the demo-section.tsx component to use backend data instead of local state
 5. Added CORS middleware to the backend to allow frontend API calls

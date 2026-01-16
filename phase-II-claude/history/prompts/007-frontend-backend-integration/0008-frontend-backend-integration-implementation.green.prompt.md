@@ -47,6 +47,6 @@ The integration has been tested to ensure:
 - All operations properly sync with the backend database
 
 ## Next Steps
-- Deploy backend and update BACKEND_URL in frontend for production
+- Deploy backend and update NEXT_PUBLIC_BACKEND_URL in frontend for production
 - Consider implementing authentication for the API endpoints
 - Add loading indicators for better user experience during API calls
