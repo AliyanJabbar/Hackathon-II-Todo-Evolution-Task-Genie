@@ -6,7 +6,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-dvh items-center justify-center pt-20 overflow-hidden">
+    <section className="relative flex min-h-dvh items-center justify-center pt-32 pb-24 overflow-hidden">
       {/* Background Ambience */}
       <div className="pointer-events-none absolute inset-0 flex justify-center">
         <div className="h-125 w-125 rounded-full bg-violet-600/20 blur-[130px] mix-blend-screen" />
@@ -18,7 +18,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-medium text-violet-300 backdrop-blur-md"
+          className="mx-auto mb-8 flex w-fit items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm font-medium text-violet-300 backdrop-blur-md"
         >
           <CheckCircle2 size={16} className="text-violet-400" />
           The AI Productivity Standard
@@ -40,9 +40,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mx-auto mt-6 max-w-2xl text-lg text-slate-400"
+          className="mx-auto mt-8 max-w-2xl text-lg text-slate-400"
         >
-          The todo app built for high-performance humans. 
+          The todo app built for high-performance humans.
           Capture tasks instantly, prioritize with AI, and never miss a deadline again.
         </motion.p>
 
@@ -50,7 +50,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <Link
             href="/todo"

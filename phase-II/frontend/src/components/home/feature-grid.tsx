@@ -33,7 +33,7 @@ const features = [
 export default function FeatureGrid() {
   return (
     <section id="features" className="container mx-auto px-4 py-24">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
         {features.map((item) => (
           <motion.div
             key={item.title}

@@ -37,9 +37,9 @@ export default function ProductMockup() {
   ];
 
   return (
-    <section id="demo" className="container mx-auto px-4 pb-24">
+    <section id="demo" className="container mx-auto px-4 py-24">
       {/* 1. External Text Section */}
-      <div className="mb-12 text-center">
+      <div className="mb-16 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -164,11 +164,10 @@ export default function ProductMockup() {
 
                       <div className="flex flex-col">
                         <span
-                          className={`text-sm md:text-base font-medium ${
-                            task.status === "done"
+                          className={`text-sm md:text-base font-medium ${task.status === "done"
                               ? "text-slate-500 line-through"
                               : "text-slate-200"
-                          }`}
+                            }`}
                         >
                           {task.title}
                         </span>
