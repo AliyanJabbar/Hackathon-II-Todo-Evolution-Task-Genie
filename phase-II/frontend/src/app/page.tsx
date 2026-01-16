@@ -8,16 +8,14 @@ import Pricing from "@/components/home/pricing";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-8 pb-10">
+    <div className="flex flex-col pb-10">
       <Hero />
 
       <ProductMockup />
 
       <StatSection />
 
-      <div className="pt-10">
-        <FeatureGrid />
-      </div>
+      <FeatureGrid />
 
       <Testimonials />
 

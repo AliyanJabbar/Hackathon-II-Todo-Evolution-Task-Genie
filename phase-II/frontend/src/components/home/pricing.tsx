@@ -63,7 +63,7 @@ export default function Pricing() {
         </p>
 
         {/* Billing Toggle */}
-        <div className="mt-8 flex items-center justify-center gap-4">
+        <div className="mt-12 flex items-center justify-center gap-4">
           <span className={`text-sm ${!isYearly ? "text-white" : "text-slate-500"}`}>Monthly</span>
           <button
             onClick={() => setIsYearly(!isYearly)}
@@ -81,19 +81,18 @@ export default function Pricing() {
       </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        {tiers.map((tier,ind) => (
+        {tiers.map((tier, ind) => (
           <motion.div
             key={tier.name}
             initial={{ y: 20 }}
             whileInView={{ y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: ind*0.1 }}
+            transition={{ delay: ind * 0.1 }}
             whileHover={{ y: -10 }}
-            className={`relative flex flex-col rounded-3xl p-8 transition-all ${
-              tier.highlight
+            className={`relative flex flex-col rounded-3xl p-8 transition-all ${tier.highlight
                 ? "bg-slate-900 border-2 border-violet-500 shadow-[0_0_40px_rgba(139,92,246,0.15)]"
                 : "bg-slate-900/50 border border-slate-800"
-            }`}
+              }`}
           >
             {tier.highlight && (
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-linear-to-r from-violet-600 to-indigo-600 px-4 py-1 text-xs font-bold text-white">
@@ -123,11 +122,10 @@ export default function Pricing() {
 
             <Link
               href="/todo"
-              className={`flex h-12 items-center justify-center rounded-xl text-sm font-bold transition-all ${
-                tier.highlight
+              className={`flex h-12 items-center justify-center rounded-xl text-sm font-bold transition-all ${tier.highlight
                   ? "bg-violet-600 text-white hover:bg-violet-500 shadow-lg"
                   : "bg-slate-800 text-white hover:bg-slate-700"
-              }`}
+                }`}
             >
               {tier.buttonText}
             </Link>

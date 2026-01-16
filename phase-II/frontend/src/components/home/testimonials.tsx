@@ -27,7 +27,7 @@ const testimonials = [
 export default function Testimonials() {
   return (
     <section id="testimonial" className="container mx-auto px-4 py-24">
-      <h2 className="mb-12 text-center text-3xl font-bold text-white">Trusted by builders</h2>
+      <h2 className="mb-16 text-center text-3xl font-bold text-white">Trusted by builders</h2>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {testimonials.map((t, i) => (
           <motion.div

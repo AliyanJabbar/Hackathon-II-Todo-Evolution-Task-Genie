@@ -27,11 +27,11 @@ export default function Navbar() {
   };
 
   const navLinks = [
-  { name: "Features", href: "/#features" },
-  { name: "Demo", href: "/#demo" }, // Linked to the new AI Simulator
-  { name: "Pricing", href: "/#pricing" },
-  { name: "Testimonial", href: "/#testimonial" },
-  { name: "Start Managing", href: "/todo" },
+    { name: "Demo", href: "/#demo" },
+    { name: "Features", href: "/#features" },
+    { name: "Testimonial", href: "/#testimonial" },
+    { name: "Pricing", href: "/#pricing" },
+    { name: "Start Managing", href: "/todo" },
   ];
 
   return (
